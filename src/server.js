@@ -1,7 +1,7 @@
 const express = require("express");
 //const db = require("./db/conexion");
 const cors = require("cors");
-const { router } = require("./presentation/routes/index");
+const { router } = require("./adapters/routes/index");
 
 class Server {
   constructor() {
