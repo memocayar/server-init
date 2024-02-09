@@ -1,6 +1,8 @@
 const express = require("express");
 //const db = require("./db/conexion");
 const cors = require("cors");
+
+//TODO: importación dinámica de rutas 
 //const { router } = require("./adapters/routes/index");
 
 class Server {
