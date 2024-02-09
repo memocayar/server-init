@@ -1,7 +1,7 @@
 const express = require("express");
 //const db = require("./db/conexion");
 const cors = require("cors");
-const { router } = require("./adapters/routes/index");
+//const { router } = require("./adapters/routes/index");
 
 class Server {
   constructor() {
@@ -46,7 +46,8 @@ class Server {
 
   routes() {
     try {
-      this.app.use(router);
+      this.app.use("/api/post", require("./adapters/routes/postRouter"));
+      //this.app.use(router);
     } catch (error) {
       console.error("Error al configurar rutas:", error);
       throw error;

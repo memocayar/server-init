@@ -8,7 +8,6 @@ const router = Router();
 const cleanFileName = (fileName) => {
   const file = fileName.split(".").shift();
   return file;
-  
 };
 
 (async () => {
