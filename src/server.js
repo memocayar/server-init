@@ -5,16 +5,22 @@ const { router } = require("./presentation/routes/index");
 
 class Server {
   constructor() {
-    this.app = express();
-    this.port = process.env.PORT || "8000";
+    try {
+      this.app = express();
+      this.port = process.env.PORT || "8000";
 
-    this.dbConnection();
-    this.middlewares();
-    this.routes();
+      this.dbConnection();
+      this.middlewares();
+      this.routes();
+    } catch (error) {
+      console.error("Error al construir el servidor:", error);
+      throw error;
+    }
   }
 
   async dbConnection() {
-/*     try {
+    try {
+      /*     try {
       await db.authenticate();
       // db.sync({ force: true })
       console.log("DB online");
@@ -22,21 +28,46 @@ class Server {
       console.error("No se pudo conectar a la DB");
       throw error;
     } */
+    } catch (error) {
+      console.error("Error al conectar a la base de datos:", error);
+      throw error;
+    }
   }
 
   middlewares() {
-    this.app.use(cors());
-    this.app.use(express.json({ limit: "50mb" }));
+    try {
+      this.app.use(cors());
+      this.app.use(express.json({ limit: "50mb" }));
+    } catch (error) {
+      console.error("Error al configurar middlewares:", error);
+      throw error;
+    }
   }
 
   routes() {
-    this.app.use(router);
+    try {
+      this.app.use(router);
+    } catch (error) {
+      console.error("Error al configurar rutas:", error);
+      throw error;
+    }
   }
 
-  listen() {
-    this.server = this.app.listen(this.port, () => {
-      console.log("Servidor corriendo en puerto " + this.port);
-    });
+  async listen() {
+    try {
+      this.server = await new Promise((resolve, reject) => {
+        this.server = this.app.listen(this.port, () => {
+          console.log("Servidor corriendo en puerto " + this.port);
+          resolve(this.server);
+        });
+        this.server.on("error", (err) => {
+          reject(err);
+        });
+      });
+    } catch (error) {
+      console.error("Error al iniciar el servidor:", error);
+      throw error;
+    }
   }
 
   close() {
