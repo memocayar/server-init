@@ -12,6 +12,12 @@ beforeAll(async () => {
   }
 });
 
+describe("trying post endpoints", () => {
+  test("get endpoint", async() => {
+    const response = await request(server).get("/api/post")
+    expect(response.statusCode).toBe(200)
+  })
+})
 
 describe("set of math test", () => {
   test("it is pair", () => {
