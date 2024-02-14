@@ -1,8 +1,10 @@
 require("supertest");
 require("dotenv").config();
+const request = require("supertest");
 
 const Server = require("../src/server");
-const server = new Server();
+const server = (new Server()).app;
+const app = server.app;
 
 beforeAll(async () => {
   try {
@@ -14,8 +16,10 @@ beforeAll(async () => {
 
 describe("trying post endpoints", () => {
   test("get endpoint", async() => {
-    const response = await request(server).get("/api/post")
-    expect(response.statusCode).toBe(200)
+      const response = await request(app).get("/api/post")
+      console.log("RESPONSE " + response)
+      expect(response.statusCode).toBe(200)
+      return response;
   })
 })
 
