@@ -3,7 +3,7 @@ require("dotenv").config();
 const request = require("supertest");
 
 const Server = require("../src/server");
-const server = (new Server()).app;
+const server = new Server();
 const app = server.app;
 
 beforeAll(async () => {
