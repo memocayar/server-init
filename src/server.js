@@ -1,6 +1,7 @@
 const express = require("express");
-//const db = require("./db/conexion");
+require("dotenv/config");
 const cors = require("cors");
+const database = require("./frameworks/sequelize");
 
 //TODO: importación dinámica de rutas 
 //const { router } = require("./adapters/routes/index");
@@ -15,23 +16,18 @@ class Server {
       this.middlewares();
       this.routes();
     } catch (error) {
-      console.error("Error al construir el servidor:", error);
+      console.error("Error building server:", error);
       throw error;
     }
   }
 
   async dbConnection() {
-    try {
-      /*     try {
-      await db.authenticate();
+    try{
+      await database.authenticate();
       // db.sync({ force: true })
-      console.log("DB online");
-    } catch (error) {
-      console.error("No se pudo conectar a la DB");
-      throw error;
-    } */
-    } catch (error) {
-      console.error("Error al conectar a la base de datos:", error);
+      console.log("Data base online");
+    } catch (error){
+      console.error("Error connecting to database::", error);
       throw error;
     }
   }
@@ -41,7 +37,7 @@ class Server {
       this.app.use(cors());
       this.app.use(express.json({ limit: "50mb" }));
     } catch (error) {
-      console.error("Error al configurar middlewares:", error);
+      console.error("Error configuring middlewares:", error);
       throw error;
     }
   }
@@ -51,7 +47,7 @@ class Server {
       this.app.use("/api/post", require("./adapters/routes/postRouter"));
       //this.app.use(router);
     } catch (error) {
-      console.error("Error al configurar rutas:", error);
+      console.error("Error configuring routes:", error);
       throw error;
     }
   }
@@ -60,7 +56,7 @@ class Server {
     try {
       this.server = await new Promise((resolve, reject) => {
         this.server = this.app.listen(this.port, () => {
-          console.log("Servidor corriendo en puerto " + this.port);
+          console.log("Server running on port " + this.port);
           resolve(this.server);
         });
         this.server.on("error", (err) => {
@@ -68,7 +64,7 @@ class Server {
         });
       });
     } catch (error) {
-      console.error("Error al iniciar el servidor:", error);
+      console.error("Error starting server:", error);
       throw error;
     }
   }
