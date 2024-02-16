@@ -17,7 +17,7 @@ beforeAll(async () => {
 describe("trying post endpoints", () => {
   test("get endpoint", async() => {
       const response = await request(app).get("/api/post")
-      console.log("RESPONSE " + response)
+      console.log("TEST RESPONSE " + response)
       expect(response.statusCode).toBe(200)
       return response;
   })

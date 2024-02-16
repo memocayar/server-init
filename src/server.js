@@ -71,6 +71,7 @@ class Server {
 
   close() {
     if (this.server) {
+      database.close();
       this.server.close();
     }
   }
