@@ -24,7 +24,7 @@ class Server {
   async dbConnection() {
     try{
       await database.authenticate();
-      // db.sync({ force: true })
+      // database.sync({ force: true })
       console.log("Data base online");
     } catch (error){
       console.error("Error connecting to database::", error);
